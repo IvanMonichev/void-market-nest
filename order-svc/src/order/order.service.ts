@@ -6,6 +6,7 @@ import { UpdateOrderDto } from 'src/order/dto/update-order-dto';
 import { Repository } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
+import { OrderStatus } from '../enums/order-status.enum';
 
 @Injectable()
 export class OrderService {
@@ -85,5 +86,12 @@ export class OrderService {
     const order = await this.orderRepo.findOne({ where: { id } });
     if (!order) throw new NotFoundException('Order not found');
     await this.orderRepo.remove(order);
+  }
+
+  async updateStatusFromEvent(orderId: number, status: OrderStatus) {
+    const order = await this.orderRepo.findOne({ where: { id: orderId } });
+    if (!order) return;
+    order.status = status;
+    await this.orderRepo.save(order);
   }
 }
