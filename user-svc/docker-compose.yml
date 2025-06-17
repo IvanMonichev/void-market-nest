@@ -1,0 +1,60 @@
+services:
+#  user-svc:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: user-svc
+#    ports:
+#      - "8010:8010"
+#    env_file:
+#      - .env
+#    depends_on:
+#      - mongo
+#    networks:
+#      - app-network
+
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+    ports:
+      - "27020:27017"
+    volumes:
+      - mongo-nest-data:/data/db
+    healthcheck:
+      test: [ "CMD-SHELL", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    networks:
+      - app-nest
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${DB_USER}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${DB_PASSWORD}
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin
+    ports:
+      - "8181:8081"
+    depends_on:
+      - mongo
+    networks:
+      - app-nest
+
+volumes:
+  mongo-nest-data:
+
+networks:
+  app-nest:
+    driver: bridge
