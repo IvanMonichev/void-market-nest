@@ -1,17 +1,17 @@
 services:
-#  user-svc:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    container_name: user-svc
-#    ports:
-#      - "8010:8010"
-#    env_file:
-#      - .env
-#    depends_on:
-#      - mongo
-#    networks:
-#      - app-network
+  user-svc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: user-svc
+    ports:
+      - "8010:8010"
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+    networks:
+      - app-nest
 
   mongo:
     image: mongo:6
