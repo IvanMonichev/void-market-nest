@@ -1,4 +1,3 @@
-// src/order/order.events.ts
 import { Controller } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { OrderService } from './order.service';
@@ -16,6 +15,7 @@ export class OrderEventsController {
       status: OrderStatus;
     },
   ) {
+    console.log('data', data);
     await this.orderService.updateStatusFromEvent(data.orderId, data.status);
   }
 }
