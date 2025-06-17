@@ -10,9 +10,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { IsEnum } from 'class-validator';
 import { OrderStatusUpdateDto } from 'src/dto/order-status-update.dto';
-import { OrderStatus } from 'src/enum/order-status';
 import { PaymentPublisher } from 'src/rabbitmq/rabbitmq.publisher';
 
 @Controller('payment/orders')

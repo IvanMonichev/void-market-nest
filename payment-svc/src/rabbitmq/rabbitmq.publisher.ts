@@ -1,4 +1,3 @@
-// src/payment/payment.publisher.ts
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 
@@ -7,6 +6,6 @@ export class PaymentPublisher {
   constructor(@Inject('ORDER_QUEUE') private readonly client: ClientProxy) {}
 
   async publishStatusUpdate(payload: { orderId: number; status: string }) {
-    await this.client.emit('order.status.updated', payload).toPromise();
+    await this.client.emit('order.status.updated', payload);
   }
 }

@@ -1,16 +1,16 @@
+import { Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { RabbitMQPublisher } from 'src/rabbitmq/rabbitmq.publisher';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const publisher = app.get(RabbitMQPublisher);
-
-  await publisher.connect(
-    'amqp://guest:guest@localhost:5672/',
-    'order_status_changed',
+  const configService = app.get(ConfigService);
+  const PORT = configService.get<number>('APP_PORT') ?? 8030;
+  await app.listen(PORT);
+  Logger.log(
+    `🚀 Payment Service is running on http://localhost:${PORT}`,
+    'Bootstrap',
   );
-
-  await app.listen(4030);
 }
 bootstrap();

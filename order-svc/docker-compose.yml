@@ -49,17 +49,6 @@ services:
     networks:
       - app-nest
 
-#  rabbitmq:
-#    image: rabbitmq:3-management
-#    ports:
-#      - "5672:5672"   # порт AMQP
-#      - "15672:15672" # порт UI
-#    environment:
-#      RABBITMQ_DEFAULT_USER: guest
-#      RABBITMQ_DEFAULT_PASS: guest
-#    networks:
-#      - app-network
-
 
 volumes:
   pgdata-nest:
