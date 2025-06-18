@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
-import { OrderController } from './order/order.controller';
-import { PaymentController } from './payment/payment.controller';
-import { UserController } from './user/user.controller';
+import { OrderModule } from 'src/order/order.module';
+import { PaymentModule } from 'src/payment/payment.module';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
-  imports: [HttpModule],
-  controllers: [OrderController, PaymentController, UserController],
+  imports: [HttpModule, OrderModule, PaymentModule, UserModule],
 })
 export class AppModule {}

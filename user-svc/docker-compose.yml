@@ -9,13 +9,12 @@ services:
     env_file:
       - .env
     depends_on:
-      - mongo
+      - user-svc.mongo
     networks:
       - app-nest
 
-  mongo:
+  user-svc.mongo:
     image: mongo:6
-    container_name: mongo
     restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
@@ -34,7 +33,7 @@ services:
     networks:
       - app-nest
 
-  mongo-express:
+  user-svc.mongo-express:
     image: mongo-express
     container_name: mongo-express
     restart: always
@@ -48,7 +47,7 @@ services:
     ports:
       - "8181:8081"
     depends_on:
-      - mongo
+      - user-svc.mongo
     networks:
       - app-nest
 

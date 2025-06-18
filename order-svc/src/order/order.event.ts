@@ -15,7 +15,6 @@ export class OrderEventsController {
       status: OrderStatus;
     },
   ) {
-    console.log('data', data);
     await this.orderService.updateStatusFromEvent(data.orderId, data.status);
   }
 }
