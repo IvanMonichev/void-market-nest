@@ -38,14 +38,14 @@ services:
     container_name: mongo-express
     restart: always
     environment:
-      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_SERVER=user-svc.mongo
       - ME_CONFIG_MONGODB_PORT=27017
       - ME_CONFIG_MONGODB_ADMINUSERNAME=${DB_USER}
       - ME_CONFIG_MONGODB_ADMINPASSWORD=${DB_PASSWORD}
       - ME_CONFIG_BASICAUTH_USERNAME=admin
       - ME_CONFIG_BASICAUTH_PASSWORD=admin
     ports:
-      - "8181:8081"
+      - "8081:8081"
     depends_on:
       - user-svc.mongo
     networks:
