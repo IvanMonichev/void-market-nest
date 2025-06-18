@@ -1,5 +1,5 @@
 export const Client = {
-  UserService: 'http://localhost:8010/users',
-  OrderService: 'http://localhost:8020/orders',
-  PaymentService: 'http://localhost:8030/payment',
+  UserService: 'http://host.docker.internal:8010/users',
+  OrderService: 'http://host.docker.internal:8020/orders',
+  PaymentService: 'http://host.docker.internal:8030/payment',
 } as const;
