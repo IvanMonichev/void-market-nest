@@ -1,18 +1,17 @@
 
 services:
-  payment-svc:
+  nest.payment-svc:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: payment-svc
     depends_on:
-      - rabbitmq
+      - nest.payment-svc.rabbitmq
     ports:
       - "8030:8030"
     networks:
       - app-nest
 
-  rabbitmq:
+  nest.payment-svc.rabbitmq:
     image: rabbitmq:3-management
     ports:
       - "5672:5672"   # порт AMQP

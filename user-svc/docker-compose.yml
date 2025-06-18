@@ -1,19 +1,18 @@
 services:
-  user-svc:
+  nest.user-svc:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: user-svc
     ports:
       - "8010:8010"
     env_file:
       - .env
     depends_on:
-      - user-svc.mongo
+      - nest.user-svc.mongo
     networks:
       - app-nest
 
-  user-svc.mongo:
+  nest.user-svc.mongo:
     image: mongo:6
     restart: unless-stopped
     environment:
@@ -33,9 +32,8 @@ services:
     networks:
       - app-nest
 
-  user-svc.mongo-express:
+  nest.user-svc.mongo-express:
     image: mongo-express
-    container_name: mongo-express
     restart: always
     environment:
       - ME_CONFIG_MONGODB_SERVER=user-svc.mongo
@@ -47,7 +45,7 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - user-svc.mongo
+      - nest.user-svc.mongo
     networks:
       - app-nest
 

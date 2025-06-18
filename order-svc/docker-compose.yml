@@ -1,22 +1,20 @@
 
 services:
-  order-svc:
+  nest.order-svc:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: order-svc
     ports:
       - "8020:8020"
     env_file:
       - .env
     depends_on:
-      - postgres
+      - nest.order-svc.postgres
     networks:
       - app-nest
 
-  postgres:
+  nest.order-svc.postgres:
     image: postgres:15
-    container_name: postgres
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -35,9 +33,8 @@ services:
       retries: 5
       start_period: 10s
 
-  pgadmin:
+  nest.order-svc.pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
@@ -45,7 +42,7 @@ services:
     ports:
       - "9000:80"
     depends_on:
-      - postgres
+      - nest.order-svc.postgres
     networks:
       - app-nest
 
