@@ -11,19 +11,20 @@ export const options = {
   }
 }
 
-function getRandomUrl() {
-  const page = Math.floor(Math.random() * 1000)
-  const offset = page * 10
-  return `http://localhost:4000/api/orders/all?offset=${offset}&limit=10`
+// Генерация случайного ID заказа (например, от 1 до 10000)
+function getRandomOrderId() {
+  return Math.floor(Math.random() * 10000) + 1
 }
 
 export default function () {
-  const url = getRandomUrl()
+  const orderId = getRandomOrderId()
+  const url = `http://localhost:4000/api/orders/${orderId}`
+
   const res = http.get(url)
 
   check(res, {
     'статус 200': (r) => r.status === 200,
-    'ответ не пустой': (r) => r.body && r.body.length > 2,
+    'ответ содержит orderId': (r) => r.body.includes(`"id":${orderId}`) || r.body.length > 2,
   })
 
   sleep(1)
