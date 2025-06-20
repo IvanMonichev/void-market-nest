@@ -1,5 +1,5 @@
 # User SVC
 
 ```bash
-docker compose --project-name user-svc-nest up -d --build
+docker compose --project-name nest-user-svc up -d --build
 ```

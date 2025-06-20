@@ -1,5 +1,5 @@
 # Order SVC
 
 ```bash
-docker compose --project-name order-svc-nest up -d --build
+docker compose --project-name nest-order-svc up -d --build
 ```

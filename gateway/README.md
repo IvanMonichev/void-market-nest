@@ -1,5 +1,5 @@
 # Gateway SVC
 
 ```bash
-docker compose --project-name gateway-nest up -d --build
+docker compose --project-name nest-gateway up -d --build
 ```
