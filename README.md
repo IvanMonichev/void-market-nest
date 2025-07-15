@@ -73,7 +73,9 @@ Example response:
 
 ### Get Orders
 `GET /api/orders/all?offset=1&limit=10`
+
 Can also take limit and offset query parameters like List Orders
+
 Example response:
 ```json
 {
