@@ -25,18 +25,18 @@ Example request body:
 }
 
   ```
-Возможные значения поля `status`:
+Possible field values `status`:
 
-- `pending` – заказ создан, ожидает оплаты
-- `paid` – заказ оплачен
-- `shipped` – заказ отправлен
-- `delivery` – заказ в процессе доставки
-- `cancelled` – заказ отменён
+- `pending` – The order is created, expects payment
+- `paid` – The order was paid
+- `shipped` – The order was sent
+- `delivery` – Ordering in the delivery process
+- `cancelled` – The order is canceled
 
 ### Get Order
 `GET /api/orders/:id`
  
-Will return single order
+Will return single order.
  
 Example response:
 ```json
@@ -74,7 +74,7 @@ Example response:
 ### Get Orders
 `GET /api/orders/all?offset=1&limit=10`
 
-Can also take limit and offset query parameters like List Orders
+Can also take limit and offset query parameters like List Orders.
 
 Example response:
 ```json
@@ -123,10 +123,10 @@ Example request body:
   "status": "paid",
 }
 ```
-Возможные значения поля `status`:
+Possible field values `status`:
 
-- `pending` – заказ создан, ожидает оплаты
-- `paid` – заказ оплачен
-- `shipped` – заказ отправлен
-- `delivery` – заказ в процессе доставки
-- `cancelled` – заказ отменён
+- `pending` – The order is created, expects payment
+- `paid` – The order was paid
+- `shipped` – The order was sent
+- `delivery` – Ordering in the delivery process
+- `cancelled` – The order is canceled
