@@ -1,0 +1,41 @@
+services:
+
+  nest.gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+      - "4020:4020"
+    networks:
+      - void-market-network
+
+  nest.user-svc:
+    build:
+      context: ./user-svc
+    ports:
+      - "4021:4021"
+    networks:
+      - void-market-network
+
+  nest.payment-svc:
+    build:
+      context: ./payment-svc
+      dockerfile: Dockerfile
+    ports:
+      - "4022:4022"
+    networks:
+      - void-market-network
+
+  nest.order-svc:
+    build:
+      context: ./order-svc
+    ports:
+      - "4023:4023"
+    networks:
+      - void-market-network
+
+
+networks:
+  void-market-network:
+    name: void-market-network
+    driver: bridge

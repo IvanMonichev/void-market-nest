@@ -28,6 +28,8 @@ export class OrderService {
       status: dto.status,
       total,
       items,
+      updatedAt: new Date(),
+      createdAt: new Date(),
     });
 
     return this.orderRepo.save(order);

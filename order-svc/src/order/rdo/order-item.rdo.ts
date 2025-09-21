@@ -1,4 +1,4 @@
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 
 export class OrderItemRDO {
   @Expose()
@@ -11,5 +11,8 @@ export class OrderItemRDO {
   quantity: number;
 
   @Expose()
+  @Transform(({ value }) =>
+    typeof value === 'string' ? parseFloat(value) : value,
+  )
   unitPrice: number;
 }

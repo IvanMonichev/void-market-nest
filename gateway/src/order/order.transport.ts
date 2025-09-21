@@ -90,7 +90,7 @@ export class OrderRdo {
 
   @Expose()
   @Type(() => UserRdo)
-  user: UserRdo;
+  user: UserRdo | null;
 
   @Expose()
   createdAt: Date;

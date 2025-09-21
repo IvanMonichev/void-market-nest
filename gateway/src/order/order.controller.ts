@@ -73,12 +73,11 @@ export class OrderController {
             user = await this.http.get<UserRdo>(
               `${Client.UserService}/${order.userId}`,
             );
-          } catch {
-            throw new HttpException(
-              'failed to fetch users',
-              HttpStatus.BAD_GATEWAY,
-            );
+          } catch (err) {
+            // ✅ Если не найден пользователь — просто оставить user = null
+            console.error(err);
           }
+
           return { ...order, user };
         }),
       );
