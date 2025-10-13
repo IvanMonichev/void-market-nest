@@ -8,12 +8,12 @@ import {
   Param,
   Query,
   Body,
-  ParseIntPipe,
   HttpCode,
   UsePipes,
   ValidationPipe,
   Put,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { UpdateOrderDto } from 'src/order/dto/update-order-dto';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -22,38 +22,73 @@ import { OrderRDO } from './rdo/order.rdo';
 
 @Controller('orders')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(
+    private readonly orderService: OrderService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
+  @HttpCode(201)
   async create(@Body() dto: CreateOrderDto) {
-    const order = await this.orderService.create(dto);
-    return plainToInstance(OrderRDO, order, { excludeExtraneousValues: true });
+    await this.orderService.create(dto);
+    return;
   }
 
   @Get('/all')
   async findAll(@Query('offset') offset = '0', @Query('limit') limit = '10') {
     const { orders, total } = await this.orderService.findAll(+offset, +limit);
-    return {
-      total,
-      orders: plainToInstance(OrderRDO, orders, {
-        excludeExtraneousValues: true,
+
+    const baseUrl =
+      this.configService.get<string>('USER_SERVICE_URL') ||
+      'http://nest.user-svc:4021/users';
+
+    const withUsers = await Promise.all(
+      orders.map(async (o) => {
+        let user: any = null;
+        try {
+          const resp = await fetch(`${baseUrl}/${o.userId}`);
+          if (resp.ok) {
+            user = await resp.json();
+          }
+        } catch (_e) {
+          user = null;
+        }
+
+        const rdo = plainToInstance(OrderRDO, o, {
+          excludeExtraneousValues: true,
+        }) as any;
+        rdo.user = user;
+        return rdo;
       }),
-    };
+    );
+
+    return { orders: withUsers, total };
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number) {
+  async findOne(@Param('id') id: string) {
     const order = await this.orderService.findById(id);
-    return plainToInstance(OrderRDO, order, { excludeExtraneousValues: true });
+    const baseUrl =
+      this.configService.get<string>('USER_SERVICE_URL') ||
+      'http://nest.user-svc:4021/users';
+    let user: any = null;
+    try {
+      const resp = await fetch(`${baseUrl}/${order.userId}`);
+      if (resp.ok) user = await resp.json();
+    } catch (_e) {
+      user = null;
+    }
+    const rdo = plainToInstance(OrderRDO, order, {
+      excludeExtraneousValues: true,
+    }) as any;
+    rdo.user = user;
+    return rdo;
   }
 
   @Put(':id')
   @UsePipes(new ValidationPipe({ transform: true }))
-  async update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() dto: UpdateOrderDto,
-  ) {
+  async update(@Param('id') id: string, @Body() dto: UpdateOrderDto) {
     const updated = await this.orderService.update(id, dto);
     return plainToInstance(OrderRDO, updated, {
       excludeExtraneousValues: true,
@@ -62,7 +97,7 @@ export class OrderController {
 
   @Delete(':id')
   @HttpCode(204)
-  async delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
+  async delete(@Param('id') id: string): Promise<void> {
     return this.orderService.delete(id);
   }
 }

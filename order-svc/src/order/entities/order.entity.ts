@@ -1,40 +1,46 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { OrderStatus } from 'src/enums/order-status.enum';
 import { OrderItem } from './order-item.entity';
 
 @Entity({ name: 'orders' })
 export class Order {
-  @PrimaryGeneratedColumn({ name: 'id' })
-  id: number;
+  @PrimaryGeneratedColumn({ name: 'id', type: 'bigint' })
+  id: string;
 
   @Column({
     name: 'user_id',
-    type: 'varchar',
-    length: 24,
+    type: 'text',
     nullable: true,
   })
   userId: string | null;
 
-  @Column({ name: 'status', type: 'enum', enum: OrderStatus })
+  @Column({ name: 'status', type: 'varchar', length: 32 })
   status: OrderStatus;
 
-  @Column({ name: 'total', type: 'float' })
-  total: number;
+  @Column({ name: 'total', type: 'numeric' })
+  total: string;
 
   @OneToMany(() => OrderItem, (item) => item.order, { cascade: true })
   items: OrderItem[];
 
-  @Column({
+  @CreateDateColumn({
     name: 'created_at',
-    type: 'timestamp with time zone',
-    nullable: false,
+    type: 'timestamptz',
+    precision: 6,
   })
   createdAt: Date;
 
-  @Column({
+  @UpdateDateColumn({
     name: 'updated_at',
-    type: 'timestamp with time zone',
-    nullable: false,
+    type: 'timestamptz',
+    precision: 6,
   })
   updatedAt: Date;
 }

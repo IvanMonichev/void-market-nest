@@ -6,7 +6,7 @@ import {
   IsNumber,
   ValidateNested,
 } from 'class-validator';
-import { Expose, Type } from 'class-transformer';
+import { Expose, Type, Transform } from 'class-transformer';
 import { OrderStatus } from 'src/order/order-status.enum';
 
 /* -------------------------------------------
@@ -82,6 +82,7 @@ export class OrderRdo {
   status: string;
 
   @Expose()
+  @Transform(({ value }) => (typeof value === 'string' ? parseFloat(value) : value))
   total: number;
 
   @Expose()
