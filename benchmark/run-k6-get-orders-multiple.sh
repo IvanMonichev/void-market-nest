@@ -1,12 +1,12 @@
 #!/bin/bash
 
-BASE_PATH="reports/mac/gin/get-orders"
+BASE_PATH="reports/mac/nest-2/get-orders"
 
 # Создаём директории один раз
 mkdir -p "$BASE_PATH/json/summary"
 mkdir -p "$BASE_PATH/csv"
 
-for i in {1..10}
+for i in {1..5}
 do
   echo "🔁 Run #$i"
   k6 run get-orders.test.js \
