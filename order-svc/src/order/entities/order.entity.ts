@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { OrderStatus } from 'src/enums/order-status.enum';
 import { OrderItem } from './order-item.entity';
 
@@ -15,26 +22,29 @@ export class Order {
   })
   userId: string | null;
 
-  @Column({ name: 'status', type: 'enum', enum: OrderStatus })
+  @Column({ name: 'status', type: 'enum', enum: OrderStatus, nullable: true })
   status: OrderStatus;
 
-  @Column({ name: 'total', type: 'float' })
+  @Column({ name: 'total', type: 'float', nullable: true })
   total: number;
 
-  @OneToMany(() => OrderItem, (item) => item.order, { cascade: true })
+  @OneToMany(() => OrderItem, (item) => item.order, {
+    cascade: true,
+    nullable: true,
+  })
   items: OrderItem[];
 
-  @Column({
+  @CreateDateColumn({
+    type: 'timestamptz',
     name: 'created_at',
-    type: 'timestamp with time zone',
-    nullable: false,
+    nullable: true,
   })
   createdAt: Date;
 
-  @Column({
+  @UpdateDateColumn({
+    type: 'timestamptz',
     name: 'updated_at',
-    type: 'timestamp with time zone',
-    nullable: false,
+    nullable: true,
   })
   updatedAt: Date;
 }

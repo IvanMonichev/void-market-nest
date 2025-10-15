@@ -2,10 +2,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
-  UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Order } from './order.entity';
 
@@ -14,22 +14,33 @@ export class OrderItem {
   @PrimaryGeneratedColumn({ name: 'id' })
   id: number;
 
-  @Column({ name: 'name' })
+  @Column({ name: 'name', nullable: true })
   name: string;
 
-  @Column({ name: 'quantity' })
+  @Column({ name: 'quantity', nullable: true })
   quantity: number;
 
-  @Column({ name: 'unit_price', type: 'float' })
+  @Column({ name: 'unit_price', type: 'float', nullable: true })
   unitPrice: number;
 
-  @ManyToOne(() => Order, (order) => order.items, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Order, (order) => order.items, {
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
   @JoinColumn({ name: 'order_id' })
   order: Order;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({
+    type: 'timestamptz',
+    name: 'created_at',
+    nullable: true,
+  })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({
+    type: 'timestamptz',
+    name: 'updated_at',
+    nullable: true,
+  })
   updatedAt: Date;
 }
