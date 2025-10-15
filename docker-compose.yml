@@ -8,6 +8,11 @@ services:
       - "4020:4020"
     networks:
       - void-market-network
+    environment:
+      - GATEWAY_PORT=4020
+      - USER_SERVICE_URL=http://nest.user-svc:4021
+      - ORDER_SERVICE_URL=http://nest.order-svc:4023
+      - PAYMENT_SERVICE_URL=http://nest.payment-svc:4022
 
   nest.user-svc:
     build:
@@ -16,6 +21,14 @@ services:
       - "4021:4021"
     networks:
       - void-market-network
+    environment:
+      - APP_PORT=4021
+      - DB_HOST=mongo
+      - DB_PORT=27017
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - DB_NAME=void-market
+      - DB_AUTH_SOURCE=admin
 
   nest.payment-svc:
     build:
@@ -25,6 +38,10 @@ services:
       - "4022:4022"
     networks:
       - void-market-network
+    environment:
+      - APP_PORT=4022
+      - RABBITMQ_URL=amqp://admin:password@rabbitmq:5672
+      - RABBITMQ_ORDER_QUEUE=order-status
 
   nest.order-svc:
     build:
@@ -33,6 +50,19 @@ services:
       - "4023:4023"
     networks:
       - void-market-network
+    environment:
+      - APP_PORT=4023
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=void-market
+      - POSTGRES_PORT=5432
+      - RABBITMQ_USER=admin
+      - RABBITMQ_PASSWORD=password
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_ORDER_QUEUE=order-status
+      - USER_SERVICE_URL=http://nest.user-svc:4021/users
 
 
 networks:

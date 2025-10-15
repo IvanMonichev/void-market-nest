@@ -10,7 +10,7 @@ async function bootstrap() {
   const PORT = 4020;
   await app.listen(PORT);
   Logger.log(
-    `🚀 Payment Service is running on http://localhost:${PORT}/api/`,
+    `🚀 API Gateway is running on http://localhost:${PORT}/api/`,
     'Bootstrap',
   );
 }

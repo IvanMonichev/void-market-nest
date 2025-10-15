@@ -2,45 +2,34 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
-  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Order } from './order.entity';
 
 @Entity({ name: 'order_items' })
 export class OrderItem {
-  @PrimaryGeneratedColumn({ name: 'id' })
-  id: number;
+  @PrimaryGeneratedColumn({ name: 'id', type: 'bigint' })
+  id: string;
 
-  @Column({ name: 'name', nullable: true })
+  @Column({ name: 'name' })
   name: string;
 
-  @Column({ name: 'quantity', nullable: true })
-  quantity: number;
+  @Column({ name: 'quantity', type: 'bigint' })
+  quantity: string;
 
-  @Column({ name: 'unit_price', type: 'float', nullable: true })
-  unitPrice: number;
+  @Column({ name: 'unit_price', type: 'numeric' })
+  unitPrice: string;
 
-  @ManyToOne(() => Order, (order) => order.items, {
-    onDelete: 'CASCADE',
-    nullable: true,
-  })
+  @ManyToOne(() => Order, (order) => order.items, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'order_id' })
   order: Order;
 
-  @CreateDateColumn({
-    type: 'timestamptz',
-    name: 'created_at',
-    nullable: true,
-  })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz', precision: 6 })
   createdAt: Date;
 
-  @UpdateDateColumn({
-    type: 'timestamptz',
-    name: 'updated_at',
-    nullable: true,
-  })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', precision: 6 })
   updatedAt: Date;
 }

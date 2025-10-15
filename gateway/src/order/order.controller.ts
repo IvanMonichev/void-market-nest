@@ -39,11 +39,11 @@ export class OrderController {
     }
 
     try {
-      const result = await this.http.post<OrderRdo>(
+      await this.http.post(
         `${Client.OrderService}`,
         body,
       );
-      return res.status(HttpStatus.CREATED).json(result);
+      return res.status(HttpStatus.CREATED).send();
     } catch {
       throw new HttpException(
         'order service unavailable',
@@ -82,7 +82,8 @@ export class OrderController {
         }),
       );
 
-      return { total, orders: fullOrders };
+      // Return orders first then total to match required JSON shape
+      return { orders: fullOrders, total };
     } catch {
       throw new HttpException('failed to fetch orders', HttpStatus.BAD_GATEWAY);
     }

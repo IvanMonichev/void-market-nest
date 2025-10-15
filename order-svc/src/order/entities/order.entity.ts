@@ -11,40 +11,36 @@ import { OrderItem } from './order-item.entity';
 
 @Entity({ name: 'orders' })
 export class Order {
-  @PrimaryGeneratedColumn({ name: 'id' })
-  id: number;
+  @PrimaryGeneratedColumn({ name: 'id', type: 'bigint' })
+  id: string;
 
   @Column({
     name: 'user_id',
-    type: 'varchar',
-    length: 24,
+    type: 'text',
     nullable: true,
   })
   userId: string | null;
 
-  @Column({ name: 'status', type: 'enum', enum: OrderStatus, nullable: true })
+  @Column({ name: 'status', type: 'varchar', length: 32 })
   status: OrderStatus;
 
-  @Column({ name: 'total', type: 'float', nullable: true })
-  total: number;
+  @Column({ name: 'total', type: 'numeric' })
+  total: string;
 
-  @OneToMany(() => OrderItem, (item) => item.order, {
-    cascade: true,
-    nullable: true,
-  })
+  @OneToMany(() => OrderItem, (item) => item.order, { cascade: true })
   items: OrderItem[];
 
   @CreateDateColumn({
-    type: 'timestamptz',
     name: 'created_at',
-    nullable: true,
+    type: 'timestamptz',
+    precision: 6,
   })
   createdAt: Date;
 
   @UpdateDateColumn({
-    type: 'timestamptz',
     name: 'updated_at',
-    nullable: true,
+    type: 'timestamptz',
+    precision: 6,
   })
   updatedAt: Date;
 }
