@@ -38,56 +38,18 @@ export class OrderController {
   async findAll(@Query('offset') offset = '0', @Query('limit') limit = '10') {
     const { orders, total } = await this.orderService.findAll(+offset, +limit);
 
-    const baseUrl =
-      this.configService.get<string>('USER_SERVICE_URL') ||
-      'http://nest.user-svc:4021/users';
-
-    const withUsers = await Promise.all(
-      orders.map(async (o) => {
-        let user: any = null;
-        try {
-          const resp = await fetch(`${baseUrl}/${o.userId}`);
-          if (resp.ok) {
-            user = await resp.json();
-          }
-        } catch (_e) {
-          user = null;
-        }
-
-        const rdo = plainToInstance(OrderRDO, o, {
-          excludeExtraneousValues: true,
-        }) as any;
-        rdo.user = user;
-        return rdo;
-      }),
-    );
-
-    return { orders: withUsers, total };
+    return { orders: orders, total };
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: number) {
     const order = await this.orderService.findById(id);
-    const baseUrl =
-      this.configService.get<string>('USER_SERVICE_URL') ||
-      'http://nest.user-svc:4021/users';
-    let user: any = null;
-    try {
-      const resp = await fetch(`${baseUrl}/${order.userId}`);
-      if (resp.ok) user = await resp.json();
-    } catch (_e) {
-      user = null;
-    }
-    const rdo = plainToInstance(OrderRDO, order, {
-      excludeExtraneousValues: true,
-    }) as any;
-    rdo.user = user;
-    return rdo;
+    return order;
   }
 
   @Put(':id')
   @UsePipes(new ValidationPipe({ transform: true }))
-  async update(@Param('id') id: string, @Body() dto: UpdateOrderDto) {
+  async update(@Param('id') id: number, @Body() dto: UpdateOrderDto) {
     const updated = await this.orderService.update(id, dto);
     return plainToInstance(OrderRDO, updated, {
       excludeExtraneousValues: true,
@@ -96,7 +58,7 @@ export class OrderController {
 
   @Delete(':id')
   @HttpCode(204)
-  async delete(@Param('id') id: string): Promise<void> {
+  async delete(@Param('id') id: number): Promise<void> {
     return this.orderService.delete(id);
   }
 }

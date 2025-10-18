@@ -16,6 +16,12 @@ export class User {
 
   @Prop()
   name: string
+
+  @Prop({ type: Date })
+  createdAt: Date
+
+  @Prop({ type: Date })
+  updatedAt: Date
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

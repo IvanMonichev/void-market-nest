@@ -11,36 +11,53 @@ import { OrderItem } from './order-item.entity';
 
 @Entity({ name: 'orders' })
 export class Order {
-  @PrimaryGeneratedColumn({ name: 'id', type: 'bigint' })
-  id: string;
+  @PrimaryGeneratedColumn({ name: 'id' })
+  id: number;
 
   @Column({
     name: 'user_id',
-    type: 'text',
-    nullable: true,
+    type: 'varchar',
+    length: 255,
+    nullable: false,
   })
-  userId: string | null;
+  userId: string;
 
-  @Column({ name: 'status', type: 'varchar', length: 32 })
+  @Column({
+    name: 'status',
+    type: 'varchar',
+    length: 32,
+    nullable: false,
+  })
   status: OrderStatus;
 
-  @Column({ name: 'total', type: 'numeric' })
-  total: string;
+  @Column({
+    name: 'total',
+    type: 'numeric',
+    precision: 10,
+    scale: 2,
+    nullable: false,
+  })
+  total: number;
 
-  @OneToMany(() => OrderItem, (item) => item.order, { cascade: true })
+  @OneToMany(() => OrderItem, (item) => item.order, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   items: OrderItem[];
 
   @CreateDateColumn({
     name: 'created_at',
-    type: 'timestamptz',
-    precision: 6,
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    nullable: false,
   })
   createdAt: Date;
 
   @UpdateDateColumn({
     name: 'updated_at',
-    type: 'timestamptz',
-    precision: 6,
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    nullable: false,
   })
   updatedAt: Date;
 }
