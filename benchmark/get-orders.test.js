@@ -1,5 +1,10 @@
 import http from 'k6/http'
 import { check, sleep } from 'k6'
+import { config } from './config/config.js'
+
+// nest | asp | go
+const CURRENT_APPLICATION = 'go'
+const PORT = config[CURRENT_APPLICATION].port
 
 export const options = {
   vus: 100,             // количество виртуальных пользователей
@@ -14,7 +19,7 @@ export const options = {
 function getRandomUrl() {
   const page = Math.floor(Math.random() * 1000)
   const offset = page * 10
-  return `http://localhost:4000/api/orders/all?offset=${offset}&limit=10`
+  return `http://localhost:${PORT}/api/orders/all?offset=${offset}&limit=10`
 }
 
 export default function () {

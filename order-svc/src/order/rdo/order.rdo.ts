@@ -3,7 +3,9 @@ import { OrderItemRDO } from './order-item.rdo';
 
 export class OrderRDO {
   @Expose()
-  @Transform(({ value }) => (typeof value === 'string' ? parseInt(value, 10) : value))
+  @Transform(({ value }) =>
+    typeof value === 'string' ? parseInt(value, 10) : value,
+  )
   id: number;
 
   @Expose()
@@ -13,7 +15,9 @@ export class OrderRDO {
   status: string;
 
   @Expose()
-  @Transform(({ value }) => (typeof value === 'string' ? parseFloat(value) : value))
+  @Transform(({ value }) =>
+    typeof value === 'string' ? parseFloat(value) : value,
+  )
   total: number;
 
   @Expose()

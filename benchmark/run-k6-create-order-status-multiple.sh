@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_PATH="reports/mac/nest-2/create-order-status"
+BASE_PATH="reports/mac/asp-2025-10-18/create-order-status"
 
 # Создание нужных директорий
 mkdir -p "$BASE_PATH/json/summary"

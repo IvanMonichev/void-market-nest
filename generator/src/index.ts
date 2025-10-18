@@ -5,8 +5,8 @@ const USER_COUNT = 1000
 const ORDERS_PER_USER = 10
 
 const API = {
-  createUser: 'http://localhost:4000/api/users',
-  createOrder: 'http://localhost:4000/api/orders'
+  createUser: 'http://localhost:4020/api/users',
+  createOrder: 'http://localhost:4020/api/orders'
 }
 
 async function main() {
