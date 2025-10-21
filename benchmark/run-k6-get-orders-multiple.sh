@@ -1,6 +1,7 @@
 #!/bin/bash
 
-BASE_PATH="reports/mac/go/get-orders/2025-10-18"
+# BASE_PATH="reports/mac/go/get-orders/2025-10-18"
+BASE_PATH="./reports/windows/asp/get-orders/2025-10-21"
 
 # Создаём директории один раз
 mkdir -p "$BASE_PATH/json/summary"

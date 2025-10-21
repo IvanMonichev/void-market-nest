@@ -32,7 +32,7 @@ services:
 
   postgres:
     image: postgres:15
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
@@ -46,7 +46,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    restart: always
+    restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@itmo.ru
       PGADMIN_DEFAULT_PASSWORD: password
@@ -61,7 +61,7 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - "5673:5672"   # порт AMQP
+      - "5673:5672" # порт AMQP
       - "15673:15672" # порт UI
     environment:
       RABBITMQ_DEFAULT_USER: admin
@@ -72,6 +72,7 @@ services:
 volumes:
   mongo-data:
   pgdata:
+
 
 networks:
   void-market-network:

@@ -3,7 +3,7 @@ import { check, sleep } from 'k6'
 import { config } from './config/config.js'
 
 // nest | asp | go
-const CURRENT_APPLICATION = 'go'
+const CURRENT_APPLICATION = 'asp'
 const PORT = config[CURRENT_APPLICATION].port
 
 export const options = {
