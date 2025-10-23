@@ -1,16 +1,23 @@
 #!/bin/bash
 
-BASE_PATH="reports/mac/nest-2/update-order-status"
+BASE_PATH="../reports/ubuntu/nest/update-order-status/2025-10-23"
 
 # Создаём директории один раз
 mkdir -p "$BASE_PATH/json/summary"
 mkdir -p "$BASE_PATH/csv"
 
-for i in {1..5}
+for i in {1..10}
 do
   echo "🔁 Run #$i"
-  k6 run update-order-status.test.js \
+  
+  mkdir -p "$BASE_PATH/json/summary"
+  mkdir -p "$BASE_PATH/csv"
+  mkdir -p "$BASE_PATH/html"
+
+  k6 run  \
     --out json="$BASE_PATH/json/result-$i.json" \
     --summary-export="$BASE_PATH/json/summary/summary-result-$i.json" \
-    --out csv="$BASE_PATH/csv/result-$i.csv"
+    --out csv="$BASE_PATH/csv/result-$i.csv" \
+    -e REPORT_NAME="$BASE_PATH/html/result-$i.html" \
+    ../update-order-status.test.js
 done

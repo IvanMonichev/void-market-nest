@@ -1,5 +1,11 @@
-import http from 'k6/http'
+import { htmlReport } from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js'
 import { check, sleep } from 'k6'
+import http from 'k6/http'
+import { config } from './config/config.js'
+
+// nest | asp | go
+const CURRENT_APPLICATION = 'nest'
+const PORT = config[CURRENT_APPLICATION].port
 
 // Настройки нагрузки
 export const options = {
@@ -9,7 +15,7 @@ export const options = {
     http_req_failed: ['rate<0.01'],
     http_req_duration: ['p(95)<500'],
     http_reqs: ['count>1000'],
-  }
+  },
 }
 
 // Список тестовых ID заказов
@@ -27,7 +33,6 @@ const OrderStatus = {
 // Все возможные значения
 const statusValues = Object.values(OrderStatus)
 
-// Функции генерации данных
 function getRandomOrderId() {
   return orderIds[Math.floor(Math.random() * orderIds.length)]
 }
@@ -36,20 +41,30 @@ function getRandomStatus() {
   return statusValues[Math.floor(Math.random() * statusValues.length)]
 }
 
-// Тестовая функция
 export default function () {
   const orderId = getRandomOrderId()
   const status = getRandomStatus()
 
-  const url = `http://localhost:4000/api/payment/orders/${orderId}/status`
+  const url = `http://localhost:${PORT}/api/payment/orders/${orderId}/status`
   const payload = JSON.stringify({ status })
   const headers = { 'Content-Type': 'application/json' }
 
   const res = http.post(url, payload, { headers })
 
   check(res, {
-    'статус 201': (r) => r.status === 201 || r.status === 202,
+    'статус 201': r => r.status === 201 || r.status === 202,
   })
 
   sleep(1)
+}
+
+export function handleSummary(data) {
+  const path = __ENV.REPORT_NAME || './summary.html'
+
+  return {
+    [path]: htmlReport(data, {
+      title: `${CURRENT_APPLICATION.toUpperCase()} | Update Status Order | Summary Report`,
+      theme: 'default',
+    }),
+  }
 }
