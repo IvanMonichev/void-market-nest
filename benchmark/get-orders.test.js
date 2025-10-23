@@ -1,19 +1,20 @@
-import http from 'k6/http'
+import { htmlReport } from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js'
 import { check, sleep } from 'k6'
+import http from 'k6/http'
 import { config } from './config/config.js'
 
 // nest | asp | go
-const CURRENT_APPLICATION = 'asp'
+const CURRENT_APPLICATION = 'nest'
 const PORT = config[CURRENT_APPLICATION].port
 
 export const options = {
-  vus: 100,             // количество виртуальных пользователей
-  duration: '1m',       // продолжительность теста
+  vus: 100, // количество виртуальных пользователей
+  duration: '1m', // продолжительность теста
   thresholds: {
-    http_req_failed: ['rate<0.01'],       // <1% ошибок
-    http_req_duration: ['p(95)<300'],     // 95% ответов быстрее 300мс
-    http_reqs: ['count>1000']             // минимум 1000 запросов
-  }
+    http_req_failed: ['rate<0.01'], // <1% ошибок
+    http_req_duration: ['p(95)<300'], // 95% ответов быстрее 300мс
+    http_reqs: ['count>1000'], // минимум 1000 запросов
+  },
 }
 
 function getRandomUrl() {
@@ -27,9 +28,20 @@ export default function () {
   const res = http.get(url)
 
   check(res, {
-    'статус 200': (r) => r.status === 200,
-    'ответ не пустой': (r) => r.body && r.body.length > 2,
+    'статус 200': r => r.status === 200,
+    'ответ не пустой': r => r.body && r.body.length > 2,
   })
 
   sleep(1)
+}
+
+export function handleSummary(data) {
+  const path = __ENV.REPORT_NAME || './summary.html'
+
+  return {
+    [path]: htmlReport(data, {
+      title: 'Load Test Summary Report',
+      theme: 'default',
+    }),
+  }
 }

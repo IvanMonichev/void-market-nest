@@ -1,6 +1,10 @@
 import http from 'k6/http'
 import { check, sleep } from 'k6'
 
+// nest | asp | go
+const CURRENT_APPLICATION = 'nest'
+const PORT = config[CURRENT_APPLICATION].port
+
 export const options = {
   vus: 100,             // количество виртуальных пользователей
   duration: '1m',       // продолжительность теста
@@ -18,7 +22,7 @@ function getRandomOrderId() {
 
 export default function () {
   const orderId = getRandomOrderId()
-  const url = `http://localhost:4000/api/orders/${orderId}`
+  const url = `http://localhost:${PORT}/api/orders/${orderId}`
 
   const res = http.get(url)
 
