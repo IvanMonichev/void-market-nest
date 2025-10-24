@@ -4,7 +4,7 @@ import http from 'k6/http'
 import { config } from './config/config.js'
 
 // nest | asp | go
-const CURRENT_APPLICATION = 'nest'
+const CURRENT_APPLICATION = 'asp'
 const PORT = config[CURRENT_APPLICATION].port
 
 export const options = {
@@ -64,10 +64,11 @@ export default function () {
 
 export function handleSummary(data) {
   const path = __ENV.REPORT_NAME || './summary.html'
+  const number = __ENV.REPORT_NUMBER ?? ''
 
   return {
     [path]: htmlReport(data, {
-      title: `${CURRENT_APPLICATION.toUpperCase()} | Create Order | Summary Report`,
+      title: `${CURRENT_APPLICATION.toUpperCase()} ${number} | Create Order | Summary Report`,
       theme: 'default',
     }),
   }

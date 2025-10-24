@@ -1,12 +1,12 @@
 #!/bin/bash
 
-BASE_PATH="../reports/ubuntu/gp/get-orders/2025-10-23-2"
+BASE_PATH="../reports/ubuntu/asp/get-orders/2025-10-24"
 
 # Создаём директории один раз
 mkdir -p "$BASE_PATH/json/summary"
 mkdir -p "$BASE_PATH/csv"
 
-for i in {1..2}
+for i in {1..10}
 do
   echo "🔁 Run #$i"
 

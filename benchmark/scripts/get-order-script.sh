@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_PATH="../reports/ubuntu/nest/get-order/2025-10-23"
+BASE_PATH="../reports/ubuntu/asp/get-order/2025-10-24"
 
 mkdir -p "$BASE_PATH/json/summary"
 mkdir -p "$BASE_PATH/csv"
@@ -18,5 +18,6 @@ do
     --summary-export="$BASE_PATH/json/summary/summary-result-$i.json" \
     --out csv="$BASE_PATH/csv/result-$i.csv" \
     -e REPORT_NAME="$BASE_PATH/html/result-$i.html" \
+    -e REPORT_NUMBER="$i" \
     ../get-order.test.js 
 done

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_PATH="../reports/ubuntu/nest/update-order-status/2025-10-23"
+BASE_PATH="../reports/ubuntu/asp/update-order-status/2025-10-24"
 
 # Создаём директории один раз
 mkdir -p "$BASE_PATH/json/summary"
@@ -19,5 +19,6 @@ do
     --summary-export="$BASE_PATH/json/summary/summary-result-$i.json" \
     --out csv="$BASE_PATH/csv/result-$i.csv" \
     -e REPORT_NAME="$BASE_PATH/html/result-$i.html" \
+    -e REPORT_NUMBER="$i" \
     ../update-order-status.test.js
 done
