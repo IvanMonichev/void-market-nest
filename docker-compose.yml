@@ -64,7 +64,6 @@ services:
       - RABBITMQ_ORDER_QUEUE=order-status
       - USER_SERVICE_URL=http://nest.user-svc:4021/users
 
-
 networks:
   void-market-network:
     name: void-market-network

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-BASE_PATH="../reports/ubuntu/go/update-order-status/2025-10-24"
+DATE_STR="${BENCHMARK_DATE:-$(date +%Y-%m-%d)}"
+BASE_PATH=".././results/asp/update-status/$DATE_STR"
 
 # Создаём директории один раз
 mkdir -p "$BASE_PATH/json/summary"
