@@ -4,7 +4,7 @@ import http from 'k6/http'
 import { config } from './config/config.js'
 
 // nest | asp | go
-const CURRENT_APPLICATION = 'asp'
+const CURRENT_APPLICATION = 'nest'
 const PORT = config[CURRENT_APPLICATION].port
 
 // Настройки нагрузки
@@ -34,7 +34,7 @@ const OrderStatus = {
 const statusValues = Object.values(OrderStatus)
 
 function getRandomOrderId() {
-  return Math.floor(Math.random() * (239618 - 182635 + 1)) + 182635
+  return orderIds[Math.floor(Math.random() * orderIds.length)]
 }
 
 function getRandomStatus() {
@@ -50,6 +50,10 @@ export default function () {
   const headers = { 'Content-Type': 'application/json' }
 
   const res = http.post(url, payload, { headers })
+
+  if (res.status >= 400) {
+    console.error(`❌ ${res.status} on order ${orderId} with ${status}`)
+  }
 
   check(res, {
     'статус 201': r => r.status === 201 || r.status === 202 || r.status === 200,
