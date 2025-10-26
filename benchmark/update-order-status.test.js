@@ -34,7 +34,7 @@ const OrderStatus = {
 const statusValues = Object.values(OrderStatus)
 
 function getRandomOrderId() {
-  return orderIds[Math.floor(Math.random() * orderIds.length)]
+  return Math.floor(Math.random() * (239618 - 182635 + 1)) + 182635
 }
 
 function getRandomStatus() {

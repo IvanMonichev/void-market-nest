@@ -1,6 +1,7 @@
 #!/bin/bash
 
-BASE_PATH="../reports/ubuntu/asp/create-order/2025-10-24"
+DATE_STR="${BENCHMARK_DATE:-$(date +%Y-%m-%d)}"
+BASE_PATH=".././results/go/create-order/$DATE_STR"
 
 mkdir -p "$BASE_PATH/json/summary"
 mkdir -p "$BASE_PATH/csv"

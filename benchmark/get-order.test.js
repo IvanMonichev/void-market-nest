@@ -19,7 +19,7 @@ export const options = {
 
 // Генерация случайного ID заказа (например, от 1 до 10000)
 function getRandomOrderId() {
-  return Math.floor(Math.random() * 10000) + 1
+  return Math.floor(Math.random() * (239618 - 182635 + 1)) + 182635
 }
 
 export default function () {
