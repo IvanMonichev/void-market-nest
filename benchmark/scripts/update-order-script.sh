@@ -1,7 +1,8 @@
 #!/bin/bash
 
 DATE_STR="${BENCHMARK_DATE:-$(date +%Y-%m-%d)}"
-BASE_PATH=".././results/asp/update-status/$DATE_STR"
+# BASE_PATH=".././results/asp/update-status/$DATE_STR"
+BASE_PATH=".././results/asp/update-status/2025-10-25"
 
 # Создаём директории один раз
 mkdir -p "$BASE_PATH/json/summary"
