@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_PATH="../reports/ubuntu/asp/get-orders/2025-10-24"
+BASE_PATH="../reports/ubuntu/go/get-orders/2025-10-24"
 
 # Создаём директории один раз
 mkdir -p "$BASE_PATH/json/summary"

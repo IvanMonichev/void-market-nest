@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_PATH="../reports/ubuntu/asp/get-order/2025-10-24"
+BASE_PATH="../reports/ubuntu/go/get-order/2025-10-24"
 
 mkdir -p "$BASE_PATH/json/summary"
 mkdir -p "$BASE_PATH/csv"
