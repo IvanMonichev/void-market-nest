@@ -4,7 +4,7 @@ import http from 'k6/http'
 import { config } from './config/config.js'
 
 // nest | asp | go
-const CURRENT_APPLICATION = 'go'
+const CURRENT_APPLICATION = 'asp'
 const PORT = config[CURRENT_APPLICATION].port
 
 export const options = {
@@ -19,7 +19,8 @@ export const options = {
 
 // Генерация случайного ID заказа (например, от 1 до 10000)
 function getRandomOrderId() {
-  return Math.floor(Math.random() * (239618 - 182635 + 1)) + 182635
+  // Если в базе 10 тысяч заказов
+  return Math.floor(Math.random() * 10_000) + 1
 }
 
 export default function () {

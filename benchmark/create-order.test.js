@@ -4,7 +4,7 @@ import http from 'k6/http'
 import { config } from './config/config.js'
 
 // nest | asp | go
-const CURRENT_APPLICATION = 'go'
+const CURRENT_APPLICATION = 'asp'
 const PORT = config[CURRENT_APPLICATION].port
 
 export const options = {
@@ -34,7 +34,7 @@ const OrderStatus = {
 const statusValues = Object.values(OrderStatus)
 
 function generateOrderPayload() {
-  const userId = '68fc9baf68339c62d4e04da1'
+  const userId = '690494c05096a3a3b1b50c64'
   const status = statusValues[getRandomInt(0, statusValues.length - 1)]
 
   const items = Array.from({ length: getRandomInt(1, 3) }).map((_, i) => ({

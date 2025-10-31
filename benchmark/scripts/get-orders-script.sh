@@ -2,7 +2,7 @@
 set -e
 
 # =============== ПАРАМЕТРЫ ======================
-TARGET="${TARGET:-GO}" # Возможные значения: GO, NEST, ASP
+TARGET="${TARGET:-ASP}" # Возможные значения: GO, NEST, ASP
 DATE_STR="${BENCHMARK_DATE:-$(date +%Y-%m-%d)}"
 PROM_URL="http://localhost:9090/api/v1/query"
 
@@ -18,10 +18,10 @@ case "$TARGET" in
     CONTAINERS=("gin.gateway" "gin.order-svc" "gin.payment-svc" "gin.user-svc")
     ;;
   "NEST")
-    CONTAINERS=("nest.gateway" "nest.order-svc" "nest.payment-svc")
+    CONTAINERS=("nest.gateway" "nest.order-svc" "nest.payment-svc" "nest.user-svc")
     ;;
   "ASP")
-    CONTAINERS=("asp.gateway" "asp.order-svc" "asp.payment-svc")
+    CONTAINERS=("asp.gateway" "asp.order-svc" "asp.payment-svc" "asp.users-svc")
     ;;
   *)
     echo "❌ Unknown TARGET: $TARGET"
@@ -54,9 +54,10 @@ do
       --data-urlencode 'query=rate(container_cpu_usage_seconds_total{container_label_com_docker_compose_service="'"${container}"'"}[30s])*100' \
       | jq -r '.data.result[0].value[1]')
 
+    # Среднее использование памяти за 60 секунд (1 минута)
     MEM=$(curl -sG "$PROM_URL" \
-      --data-urlencode 'query=container_memory_usage_bytes{container_label_com_docker_compose_service="'"${container}"'"}/(1024*1024)' \
-      | jq -r '.data.result[0].value[1]')
+      --data-urlencode "query=avg_over_time(container_memory_usage_bytes{container_label_com_docker_compose_service=\"${container}\"}[1m])/(1024*1024)" \
+      | jq -r '.data.result[0].value[1] // "0"')
 
     # Формируем JSON-объект
     printf '  { "container": "%s", "cpu_percent": %.4f, "mem_mb": %.4f }' "$container" "$CPU" "$MEM" >> "$TMP_FILE"

@@ -2,7 +2,7 @@ services:
   mongo:
     image: mongo:6
     ports:
-      - "27018:27017"
+      - '27018:27017'
     volumes:
       - mongo-data:/data/db
     environment:
@@ -16,7 +16,7 @@ services:
   mongo-express:
     image: mongo-express
     ports:
-      - "8082:8081"
+      - '8082:8081'
     environment:
       - ME_CONFIG_MONGODB_SERVER=mongo
       - ME_CONFIG_MONGODB_PORT=27017
@@ -38,7 +38,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: void-market
     ports:
-      - "5433:5432"
+      - '5433:5432'
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
@@ -50,9 +50,9 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@itmo.ru
       PGADMIN_DEFAULT_PASSWORD: password
-      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
     ports:
-      - "5050:80"
+      - '5050:80'
     depends_on:
       - postgres
     networks:
@@ -61,8 +61,8 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - "5673:5672" # порт AMQP
-      - "15673:15672" # порт UI
+      - '5673:5672' # порт AMQP
+      - '15673:15672' # порт UI
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: password
@@ -72,7 +72,6 @@ services:
 volumes:
   mongo-data:
   pgdata:
-
 
 networks:
   void-market-network:

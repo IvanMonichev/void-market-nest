@@ -1,0 +1,6 @@
+[
+  { "container": "gin.gateway", "cpu_percent": 21.7937, "mem_mb": 26.0163 },
+  { "container": "gin.order-svc", "cpu_percent": 13.1382, "mem_mb": 26.9290 },
+  { "container": "gin.payment-svc", "cpu_percent": 0.0071, "mem_mb": 14.2578 },
+  { "container": "gin.user-svc", "cpu_percent": 26.5108, "mem_mb": 25.2617 }
+]

@@ -1,0 +1,6 @@
+[
+  { "container": "asp.gateway", "cpu_percent": 5.1605, "mem_mb": 99.9349 },
+  { "container": "asp.order-svc", "cpu_percent": 13.5375, "mem_mb": 211.8737 },
+  { "container": "asp.payment-svc", "cpu_percent": 0.0260, "mem_mb": 88.2197 },
+  { "container": "asp.users-svc", "cpu_percent": 0.0174, "mem_mb": 62.1296 }
+]

@@ -1,0 +1,6 @@
+[
+  { "container": "nest.gateway", "cpu_percent": 11.6962, "mem_mb": 76.9567 },
+  { "container": "nest.order-svc", "cpu_percent": 10.2527, "mem_mb": 76.6555 },
+  { "container": "nest.payment-svc", "cpu_percent": 8.4071, "mem_mb": 73.5380 },
+  { "container": "nest.user-svc", "cpu_percent": 0.0119, "mem_mb": 88.0516 }
+]

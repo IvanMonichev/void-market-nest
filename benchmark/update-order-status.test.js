@@ -4,7 +4,7 @@ import http from 'k6/http'
 import { config } from './config/config.js'
 
 // nest | asp | go
-const CURRENT_APPLICATION = 'nest'
+const CURRENT_APPLICATION = 'asp'
 const PORT = config[CURRENT_APPLICATION].port
 
 // Настройки нагрузки
