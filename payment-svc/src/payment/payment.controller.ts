@@ -20,7 +20,7 @@ export class PaymentController {
   @Post(':id/status')
   @HttpCode(HttpStatus.ACCEPTED)
   @UsePipes(new ValidationPipe({ transform: true }))
-  updateOrderStatus(
+  async updateOrderStatus(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: OrderStatusUpdateDto,
   ) {
@@ -28,11 +28,11 @@ export class PaymentController {
       throw new BadRequestException('Status is required');
     }
 
-    this.publisher.publishStatusUpdate({
+    await this.publisher.publishStatusUpdate({
       orderId: id,
       status: dto.status,
     });
 
-    return { message: 'status update published' };
+    return { message: `status update published` };
   }
 }

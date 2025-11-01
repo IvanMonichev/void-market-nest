@@ -9,7 +9,11 @@ import { OrderEventsController } from './order.event';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Order, OrderItem])],
-  controllers: [OrderController, OrderEventsController, PaymentStatusController],
+  controllers: [
+    OrderController,
+    OrderEventsController,
+    PaymentStatusController,
+  ],
   providers: [OrderService],
 })
 export class OrderModule {}

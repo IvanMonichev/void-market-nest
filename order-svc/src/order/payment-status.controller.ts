@@ -1,4 +1,5 @@
-import { Body, Controller, HttpCode, HttpStatus, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { OrderService } from './order.service';
 import { OrderStatus } from '../enums/order-status.enum';
 
@@ -6,13 +7,14 @@ import { OrderStatus } from '../enums/order-status.enum';
 export class PaymentStatusController {
   constructor(private readonly orderService: OrderService) {}
 
-  @Post('orders/:id/status')
-  @HttpCode(HttpStatus.ACCEPTED)
-  async updateStatus(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() body: { status: OrderStatus },
+  @MessagePattern('order.status.updated')
+  async handleOrderStatusUpdated(
+    @Payload() data: { orderId: number; status: OrderStatus },
   ) {
-    if (!body?.status) return;
-    await this.orderService.updateStatusFromEvent(id, body.status);
+    console.log('[Consumer] Received:', data);
+
+    await this.orderService.updateStatusFromEvent(data.orderId, data.status);
+
+    return { ok: true };
   }
 }
